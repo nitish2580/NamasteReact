@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import RestrauntCard from "./RestaurantCard";
 import Shimmer from "./Shimmar";
 import { Link } from "react-router-dom";
+import { filterData } from "../utils/helper";
+import { FETCH_RESTUARANT_URL } from "../constants";
+import useOnline from "../utils/useOnline";
 
-function filterData(searchTxt,restaurants){
-    return restaurants.filter((restaurant)=>restaurant.data.name.toLowerCase().includes(searchTxt.toLowerCase()))
-}
 
 
 // <----------------------------------Body--------------------->
@@ -20,8 +20,7 @@ const Body = () => {
     // <------------------------getRestaurants------------------------>
     async function getRestaurants(){
       try {
-        const data=await fetch(
-          "https://www.swiggy.com/dapi/restaurants/list/v5?lat=26.7963827&lng=75.815382&page_type=DESKTOP_WEB_LISTING")
+        const data=await fetch(FETCH_RESTUARANT_URL)
         const json=await data.json();
 
         setAllRestaurants(json?.data?.cards[2]?.data?.data?.cards);
@@ -30,6 +29,11 @@ const Body = () => {
         console.log("Error: ", error)
       }
       
+    }
+
+    const offline=useOnline();
+    if(!offline){
+      return<h1>Offline, Check your internet connection</h1>
     }
 
 

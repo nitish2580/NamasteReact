@@ -28,6 +28,9 @@ const Header = () => {
           <Link to="/cart">
           <li>Cart</li>
           </Link>
+          <Link to="/instamart">
+            <li>Instamart</li>
+          </Link>
         </ul>
       </div>
       {(isLoggedIn)?<button onClick={()=>setIsLoggedIn(false)}>Login</button>:<button onClick={()=>setIsLoggedIn(true)}>Logout</button>}
