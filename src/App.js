@@ -1,4 +1,4 @@
-      import React, { lazy,Suspense } from "react";
+      import React, { lazy,Suspense, useState } from "react";
       import ReactDOM from "react-dom/client";
       import Header from "./component/Header";
       import Footer from "./component/Footer";
@@ -13,6 +13,8 @@
       import { Children } from "react/cjs/react.production.min";
       import Profile from "./component/Profile";
       import Shimmer from "./component/Shimmar";
+      import {Provider} from "react-redux";
+      import store from "./utils/store";
       
 
       // chunking
@@ -25,8 +27,14 @@
       const Instamart=lazy(()=>import("./component/Instamart"))
       const About=lazy(()=>import("./component/About"))
       const AppLayout = () => {
+
+        const [user,setUser]=useState({
+          name:"kakashi",
+          email:"kakashi@gmail.com"
+        })
+
         return (
-          <>
+          <Provider store ={store}>
             <Header />
             <Outlet/>
             {/* <About/> */}
@@ -34,7 +42,7 @@
             {/* <Contact /> */}
 
             <Footer />
-          </>
+          </Provider>
         );
       };
       const appRotuer = createBrowserRouter([
@@ -72,13 +80,14 @@
               <Suspense fallback={<Shimmer/>}>
                 <Instamart/>
               </Suspense>)
+            },
+            {
+              path:"/cart",
+              element:<Cart/>
             }
           ]  
         },
-        {
-          path:"/cart",
-          element:<Cart/>
-        },
+
         
       ])
       const root = ReactDOM.createRoot(document.getElementById("root"));

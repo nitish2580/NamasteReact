@@ -1,5 +1,7 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
+import UserContext from "../utils/UserContext";
+import { useSelector } from "react-redux";
 
 const loggedInUser = (val)=>{
   return true
@@ -10,6 +12,8 @@ const Title = () => (
 );
 const Header = () => {
   const [isLoggedIn,setIsLoggedIn]=useState(true);
+  const {user}=useContext(UserContext)
+  const cartItems = useSelector(store => store.cart.items);
   return (
     <div className="flex justify-between bg-pink-50 shadow-lg sm:bg-blue-50 md:bg-yellow-50">
       <Title />
@@ -26,13 +30,14 @@ const Header = () => {
           <Link to="/contact">Contact</Link>
           </li>
           <li className="px-2">
-          <Link to="/cart">Cart</Link>
+          <Link to="/instamart">Instamart</Link>
           </li>
           <li className="px-2">
-          <Link to="/instamart">Instamart</Link>
+          <Link to="/cart">Cart {cartItems.length}item</Link>
           </li>
         </ul>
       </div>
+      <h1 className="p-10 font-bold text-red-900">{user.name}</h1>
       {(isLoggedIn)?<button onClick={()=>setIsLoggedIn(false)}>Login</button>:<button onClick={()=>setIsLoggedIn(true)}>Logout</button>}
     </div>
   );

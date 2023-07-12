@@ -1,7 +1,7 @@
 const Cart= () => {
     return (
         <div>
-            <h1>ACart Page</h1>
+            <h1 className="text-4xl">Cart Items</h1>
             <p>
                 {" "}
                 this is the namaste react Cart page
